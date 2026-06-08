@@ -20,31 +20,67 @@
       --text-tertiary: #3a3a3c;
       --accent-dim: rgba(245,245,247,0.06);
       --green: #30d158;
-      --radius: 18px;
-      --radius-sm: 10px;
       --font: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text-primary); font-family: var(--font); font-size: 16px; line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* ── Setup screen ── */
+    #setupScreen {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; padding: 2rem;
+    }
+    .setup-box {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 420px;
+      display: flex; flex-direction: column; gap: 1.25rem;
+    }
+    .setup-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    .setup-title span { color: var(--green); }
+    .setup-desc { font-size: 0.85rem; color: var(--text-secondary); font-weight: 300; line-height: 1.6; }
+    .setup-desc a { color: var(--text-secondary); }
+    .setup-input {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-primary); font-family: var(--font); font-size: 0.9rem;
+      padding: 12px 14px; border-radius: 10px; width: 100%;
+      transition: border-color 0.2s; outline: none;
+    }
+    .setup-input:focus { border-color: var(--border-hover); }
+    .setup-input::placeholder { color: var(--text-tertiary); }
+    .setup-btn {
+      background: var(--text-primary); color: #000;
+      border: none; font-family: var(--font); font-size: 0.9rem; font-weight: 500;
+      padding: 12px; border-radius: 10px; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .setup-btn:hover { opacity: 0.85; }
+    .setup-error { font-size: 0.8rem; color: #ff453a; display: none; }
+
+    /* ── Main app ── */
+    #app { display: none; }
     .site-header { display: flex; align-items: center; justify-content: space-between; padding: 2rem 2.5rem 1.5rem; border-bottom: 1px solid var(--border); }
     .header-inner { display: flex; flex-direction: column; gap: 2px; }
     .logo { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; }
     .logo-dot { color: var(--green); }
     .tagline { font-size: 0.8rem; color: var(--text-secondary); font-weight: 300; }
+    .header-left { display: flex; align-items: center; gap: 1.25rem; }
     .header-status { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--text-secondary); }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-tertiary); transition: background 0.4s; }
     .status-dot.live { background: var(--green); box-shadow: 0 0 8px var(--green); }
     .status-dot.loading { background: #ffd60a; }
     .status-dot.error { background: #ff453a; }
+    .btn-reset { background: none; border: none; color: var(--text-tertiary); font-family: var(--font); font-size: 0.75rem; cursor: pointer; padding: 4px; transition: color 0.2s; }
+    .btn-reset:hover { color: var(--text-secondary); }
     .main { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 4rem; }
-    .current-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; margin-bottom: 1.25rem; transition: border-color 0.3s; min-height: 180px; display: flex; flex-direction: column; gap: 1rem; }
+    .current-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 18px; padding: 2.5rem; margin-bottom: 1.25rem; transition: border-color 0.3s; min-height: 180px; display: flex; flex-direction: column; gap: 1rem; }
     .current-card:hover { border-color: var(--border-hover); }
     .card-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
     .card-content { font-size: 1.15rem; font-weight: 300; line-height: 1.75; flex: 1; }
     .card-content.loading-text { color: var(--text-tertiary); font-style: italic; }
     .card-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
     .card-time { font-size: 0.75rem; color: var(--text-tertiary); }
-    .btn-next { background: var(--accent-dim); border: 1px solid var(--border); color: var(--text-primary); font-family: var(--font); font-size: 0.82rem; font-weight: 400; padding: 8px 18px; border-radius: 50px; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    .btn-next { background: var(--accent-dim); border: 1px solid var(--border); color: var(--text-primary); font-family: var(--font); font-size: 0.82rem; padding: 8px 18px; border-radius: 50px; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
     .btn-next:hover { background: rgba(255,255,255,0.1); border-color: var(--border-hover); }
     .btn-next:active { transform: scale(0.97); }
     .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -54,13 +90,13 @@
     .archive-title { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; }
     .archive-list { display: flex; flex-direction: column; gap: 1px; }
     .archive-empty { font-size: 0.85rem; color: var(--text-tertiary); padding: 1rem 0; }
-    .archive-item { background: var(--surface); border-radius: var(--radius-sm); padding: 1rem 1.25rem; cursor: pointer; transition: background 0.15s; border: 1px solid transparent; }
+    .archive-item { background: var(--surface); border-radius: 10px; padding: 1rem 1.25rem; cursor: pointer; transition: background 0.15s; border: 1px solid transparent; }
     .archive-item:hover { background: var(--surface-2); border-color: var(--border); }
     .archive-item-type { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
     .archive-item-text { font-size: 0.9rem; font-weight: 300; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .archive-item-time { font-size: 0.7rem; color: var(--text-tertiary); margin-top: 6px; }
     .site-footer { border-top: 1px solid var(--border); padding: 1.5rem 2.5rem; font-size: 0.78rem; color: var(--text-tertiary); text-align: center; }
-    .site-footer a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .site-footer a { color: var(--text-secondary); text-decoration: none; }
     .site-footer a:hover { color: var(--text-primary); }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .fade-in { animation: fadeIn 0.5s ease forwards; }
@@ -73,67 +109,112 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <h1 class="logo">ברצץ<span class="logo-dot">.</span></h1>
-      <p class="tagline">בדיחות וסיפורים — מופעל על ידי Groq</p>
+  <!-- Setup screen -->
+  <div id="setupScreen">
+    <div class="setup-box">
+      <div class="setup-title">ברצץ<span>.</span></div>
+      <p class="setup-desc">
+        הכנס את מפתח ה-API של Groq כדי להתחיל.<br/>
+        המפתח נשמר רק אצלך בדפדפן ולא נשלח לאף שרת.<br/>
+        <a href="https://console.groq.com" target="_blank">קבל מפתח חינמי ←</a>
+      </p>
+      <input class="setup-input" id="keyInput" type="password" placeholder="gsk_..." />
+      <p class="setup-error" id="setupError">מפתח לא תקין, נסה שוב</p>
+      <button class="setup-btn" onclick="submitKey()">התחל ←</button>
     </div>
-    <div class="header-status">
-      <span class="status-dot" id="statusDot"></span>
-      <span id="statusText">ממתין...</span>
-    </div>
-  </header>
+  </div>
 
-  <main class="main">
-    <section class="current-card" id="currentCard">
-      <div class="card-label" id="cardLabel">טוען...</div>
-      <p class="card-content" id="cardContent">מיד מגיע משהו טוב...</p>
-      <div class="card-meta">
-        <span class="card-time" id="cardTime"></span>
-        <button class="btn-next" id="btnNext" onclick="fetchNew()">הבא ←</button>
+  <!-- Main app -->
+  <div id="app">
+    <header class="site-header">
+      <div class="header-inner">
+        <h1 class="logo">ברצץ<span class="logo-dot">.</span></h1>
+        <p class="tagline">בדיחות וסיפורים — מופעל על ידי Groq</p>
       </div>
-    </section>
-
-    <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
-    <p class="timer-label">הבא בעוד <span id="countdown">5:00</span></p>
-
-    <section class="archive">
-      <h2 class="archive-title">ארכיון</h2>
-      <div class="archive-list" id="archiveList">
-        <p class="archive-empty">עדיין אין פריטים בארכיון</p>
+      <div class="header-left">
+        <div class="header-status">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">ממתין...</span>
+        </div>
+        <button class="btn-reset" onclick="resetKey()" title="החלף מפתח">החלף מפתח</button>
       </div>
-    </section>
-  </main>
+    </header>
 
-  <footer class="site-footer">
-    <p>נבנה עם Groq · <a href="https://console.groq.com" target="_blank">קבל מפתח API</a></p>
-  </footer>
+    <main class="main">
+      <section class="current-card" id="currentCard">
+        <div class="card-label" id="cardLabel">טוען...</div>
+        <p class="card-content" id="cardContent">מיד מגיע משהו טוב...</p>
+        <div class="card-meta">
+          <span class="card-time" id="cardTime"></span>
+          <button class="btn-next" id="btnNext" onclick="fetchNew()">הבא ←</button>
+        </div>
+      </section>
+
+      <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+      <p class="timer-label">הבא בעוד <span id="countdown">5:00</span></p>
+
+      <section>
+        <h2 class="archive-title">ארכיון</h2>
+        <div class="archive-list" id="archiveList">
+          <p class="archive-empty">עדיין אין פריטים בארכיון</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>נבנה עם Groq · <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
+    </footer>
+  </div>
 
   <script>
-    // ── הגדרות — שנה כאן ──
-    const GROQ_API_KEY     = "c8ae08b0-a711-4165-8d8a-a54228791929:wc-3qO9Z2forRpagyGf7ZfRnfEwf3GhM";
     const INTERVAL_MINUTES = 5;
     const MODEL            = "llama3-70b-8192";
     const CONTENT_TYPES    = ["בדיחה", "סיפור קצר", "עובדה מצחיקה", "אנקדוטה"];
-    // ─────────────────────
+    const STORAGE_KEY      = "baratzatz_archive";
+    const KEY_STORAGE      = "baratzatz_apikey";
 
-    const STORAGE_KEY  = "baratzatz_archive";
-    const INTERVAL_MS  = INTERVAL_MINUTES * 60 * 1000;
-    let archive        = loadArchive();
-    let timerInterval  = null;
-    let countdownSecs  = INTERVAL_MS / 1000;
+    let archive       = loadArchive();
+    let timerInterval = null;
+    let countdownSecs = INTERVAL_MINUTES * 60;
+    let GROQ_API_KEY  = "";
 
     const $ = id => document.getElementById(id);
 
-    renderArchive();
-    fetchNew();
-    startTimer();
+    // ── Startup ──
+    const savedKey = localStorage.getItem(KEY_STORAGE);
+    if (savedKey) { GROQ_API_KEY = savedKey; launchApp(); }
 
-    async function fetchNew() {
-      if (GROQ_API_KEY === "c8ae08b0-a711-4165-8d8a-a54228791929:wc-3qO9Z2forRpagyGf7ZfRnfEwf3GhM") {
-        showError("פתח את הקובץ והכנס את מפתח Groq שלך בשורה הראשונה של ה-script");
-        return;
+    function submitKey() {
+      const val = $("keyInput").value.trim();
+      if (!val.startsWith("gsk_") || val.length < 20) {
+        $("setupError").style.display = "block"; return;
       }
+      $("setupError").style.display = "none";
+      GROQ_API_KEY = val;
+      localStorage.setItem(KEY_STORAGE, val);
+      launchApp();
+    }
+
+    $("keyInput").addEventListener("keydown", e => { if (e.key === "Enter") submitKey(); });
+
+    function launchApp() {
+      $("setupScreen").style.display = "none";
+      $("app").style.display = "block";
+      renderArchive();
+      fetchNew();
+      startTimer();
+    }
+
+    function resetKey() {
+      localStorage.removeItem(KEY_STORAGE);
+      clearInterval(timerInterval);
+      $("app").style.display = "none";
+      $("setupScreen").style.display = "flex";
+      $("keyInput").value = "";
+    }
+
+    // ── Fetch ──
+    async function fetchNew() {
       setStatus("loading", "טוען...");
       $("btnNext").disabled = true;
       $("cardContent").className = "card-content loading-text";
@@ -142,10 +223,10 @@
 
       const type = CONTENT_TYPES[Math.floor(Math.random() * CONTENT_TYPES.length)];
       const prompts = {
-        "בדיחה":          "ספר לי בדיחה קצרה ומצחיקה בעברית. רק הבדיחה — ללא כותרת.",
-        "סיפור קצר":      "ספר לי סיפור קצר ומשעשע בעברית (4-6 משפטים). ללא כותרת.",
-        "עובדה מצחיקה":   "שתף עובדה מצחיקה או מפתיעה בעברית. ללא כותרת.",
-        "אנקדוטה":        "ספר אנקדוטה קצרה ומשעשעת בעברית (3-5 משפטים). ללא כותרת.",
+        "בדיחה":        "ספר לי בדיחה קצרה ומצחיקה בעברית. רק הבדיחה — ללא כותרת.",
+        "סיפור קצר":    "ספר לי סיפור קצר ומשעשע בעברית (4-6 משפטים). ללא כותרת.",
+        "עובדה מצחיקה": "שתף עובדה מצחיקה או מפתיעה בעברית. ללא כותרת.",
+        "אנקדוטה":      "ספר אנקדוטה קצרה ומשעשעת בעברית (3-5 משפטים). ללא כותרת.",
       };
 
       try {
@@ -153,12 +234,10 @@
           method: "POST",
           headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_API_KEY}` },
           body: JSON.stringify({
-            model: MODEL,
-            max_tokens: 300,
-            temperature: 0.9,
+            model: MODEL, max_tokens: 300, temperature: 0.9,
             messages: [
               { role: "system", content: "אתה מספר בדיחות וסיפורים קצרים בעברית. ללא הסברים — רק התוכן עצמו." },
-              { role: "user",   content: prompts[type] || "ספר לי משהו מצחיק בעברית." }
+              { role: "user",   content: prompts[type] }
             ]
           })
         });
@@ -184,9 +263,7 @@
       $("cardContent").className = "card-content";
       $("cardTime").textContent = new Date().toLocaleTimeString("he-IL", {hour:"2-digit", minute:"2-digit"});
       const card = $("currentCard");
-      card.classList.remove("fade-in");
-      void card.offsetWidth;
-      card.classList.add("fade-in");
+      card.classList.remove("fade-in"); void card.offsetWidth; card.classList.add("fade-in");
     }
 
     function showError(msg) {
@@ -196,21 +273,23 @@
       $("cardContent").className = "card-content";
     }
 
+    // ── Timer ──
     function startTimer() {
-      countdownSecs = INTERVAL_MS / 1000;
+      countdownSecs = INTERVAL_MINUTES * 60;
       updateTimerUI();
       timerInterval = setInterval(() => { countdownSecs--; updateTimerUI(); if (countdownSecs <= 0) fetchNew(); }, 1000);
     }
     function resetTimer() { clearInterval(timerInterval); startTimer(); }
     function updateTimerUI() {
-      $("timerFill").style.width = (countdownSecs / (INTERVAL_MS/1000) * 100) + "%";
+      $("timerFill").style.width = (countdownSecs / (INTERVAL_MINUTES*60) * 100) + "%";
       const m = Math.floor(countdownSecs/60), s = countdownSecs % 60;
       $("countdown").textContent = `${m}:${String(s).padStart(2,"0")}`;
     }
 
+    // ── Archive ──
     function saveToArchive(type, text) {
       archive.unshift({ type, text, time: new Date().toISOString() });
-      if (archive.length > 100) archive = archive.slice(0, 100);
+      if (archive.length > 200) archive = archive.slice(0, 200);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(archive));
       renderArchive();
     }
@@ -225,11 +304,12 @@
         </div>`).join("");
     }
     function showItem(i) {
-      const item = archive[i];
+      const item = archive[i]; if (!item) return;
       displayContent(item.type, item.text);
       $("cardTime").textContent = new Date(item.time).toLocaleTimeString("he-IL",{hour:"2-digit",minute:"2-digit"}) + " (ארכיון)";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
     function setStatus(state, text) { $("statusDot").className = "status-dot " + state; $("statusText").textContent = text; }
   </script>
 </body>
